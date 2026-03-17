@@ -4,4 +4,4 @@ ami                    = "ami-0a734ede9890e57f5"
     key_name               = "eks-ppk"
     project_name           = "project-2"
     env                    = "dev"
-    unique_ids              = ["jenkins-master-server","jenkins-build-slave-server","ansible-control-server"]
+    unique_ids              = ["jenkins-master-server","jenkins-build-slave-server"]

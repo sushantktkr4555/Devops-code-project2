@@ -1,0 +1,9 @@
+---
+- name: Configure Maven slave node
+  hosts: jenkins-slave
+  become: true
+  tasks:
+    - name: Install java 21 corretto
+      yum:
+        name: java-21-amazon-corretto
+        state: present

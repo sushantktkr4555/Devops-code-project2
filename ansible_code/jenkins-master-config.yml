@@ -1,0 +1,30 @@
+---
+- name: configure jenkins master node
+  hosts: jenkins-master
+  become: true
+  tasks:
+    - name: install java 21 corretto
+      yum:
+        name: java-21-amazon-corretto
+        state: present
+        
+    - name: Add Jenkins repo
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+
+    - name: Import Jenkins gpg key
+      rpm_key:
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+        state: present
+
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+
+    - name: enable & start Jenkins
+      systemd:
+        name: jenkins
+        enabled: yes
+        state: started             
