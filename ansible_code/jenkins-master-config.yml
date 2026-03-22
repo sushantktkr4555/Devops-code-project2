@@ -32,7 +32,9 @@
     - name: install git
       yum:
         name: git
+        state: presents
       tags: install_git
+      
 
     - name: check git version
       shell: git --version
@@ -41,5 +43,5 @@
 
     - name: print git version
       debug:
-        var: {{ git_version.stdout }}
+        var: git_version.stdout
       tags: install_git  
