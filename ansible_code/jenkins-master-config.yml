@@ -27,4 +27,19 @@
       systemd:
         name: jenkins
         enabled: yes
-        state: started             
+        state: started
+
+    - name: install git
+      yum:
+        name: git
+      tags: install_git
+
+    - name: check git version
+      shell: git --version
+      tags: install_git
+      register: git_version
+
+    - name: print git version
+      deub:
+        var: {{ git_version.stdout }}
+      tags: install_git  
