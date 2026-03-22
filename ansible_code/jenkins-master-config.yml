@@ -40,6 +40,6 @@
       register: git_version
 
     - name: print git version
-      deub:
+      debug:
         var: {{ git_version.stdout }}
       tags: install_git  
