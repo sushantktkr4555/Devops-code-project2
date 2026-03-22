@@ -32,7 +32,7 @@
     - name: install git
       yum:
         name: git
-        state: presents
+        state: present
       tags: install_git
       
 
