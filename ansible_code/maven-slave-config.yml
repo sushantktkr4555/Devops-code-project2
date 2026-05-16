@@ -33,5 +33,28 @@
     - name: print git version
       debug:
         var: git_version.stdout
-      tags: install_git  
+      tags: install_git
+
+    - name: Install docker
+      yum:
+        name: docker
+        state: present
+      tags: install_docker
+
+    - name: enable & start docker
+      service:
+        name: docker
+        enabled: yes
+        state: started
+      tags: install_docker
+
+    - name: docker status
+      command: service docker status
+      register: docker_status
+      tags: install_docker
+
+    - name: print docker status
+      debug:
+        msg: "Docker service is {{ docker_status.stdout }}"
+      tags: install_docker    
              
