@@ -56,5 +56,12 @@
     - name: print docker status
       debug:
         msg: "Docker service is {{ docker_status.stdout }}"
-      tags: install_docker    
+      tags: install_docker  
+
+    - name: permission to docker sock
+      file:
+        path: /var/run/docker.sock
+        state: file
+        mode: 0777
+      tags: install_docker  
              
