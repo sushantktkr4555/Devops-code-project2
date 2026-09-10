@@ -2,6 +2,11 @@
 - name: Configure Maven slave node
   hosts: jenkins-slave
   become: true
+
+  vars:
+    kubectl_version: "v1.33.2"
+
+
   tasks:
     - name: Install java 21 corretto
       yum:
@@ -65,3 +70,28 @@
         mode: 0777
       tags: install_docker  
              
+    - name: Download kubectl binary
+      get_url:
+        url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
+        dest: /usr/local/bin/kubectl
+        mode: '0755'
+      tags: install_kubectl  
+
+    - name: Set kubectl path
+      lineinfile:
+        path: /etc/profile.d/kubectl.sh
+        line: 'export PATH=$PATH:/usr/local/bin'
+        create: yes
+        mode: '0644'
+      tags: install_kubectl    
+
+    - name: Verify kubectl installation
+      command: kubectl version --client
+      register: kubectl_version_output
+      changed_when: false
+      tags: install_kubectl   
+
+    - name: Display kubectl version
+      debug:
+        var: kubectl_version_output.stdout
+      tags: install_kubectl 
